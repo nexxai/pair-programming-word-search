@@ -4,11 +4,17 @@ const wordSearch = (letters, word) => {
     }
 
     // Check if input is consistent
-    const rowLength = letters[0].length;
+    const rowLength = letters[0].length
     letters.forEach(row => {
         if (row.length !== rowLength) {
             throw new Error("All rows must be the same length");
         }
+
+        row.forEach(letter => {
+            if (typeof letter !== 'string') throw new Error("Please enter a matrix of letters only");
+            let alphabet = 'abcdefghijklmnopqrstuvwyz';
+            if (!alphabet.includes(letter.toLowerCase())) throw new Error("Please enter a matrix of letters only");
+        })
     });
 
     const horizontalJoin = letters.map(ls => ls.join(''));
@@ -23,13 +29,6 @@ const wordSearch = (letters, word) => {
         let column = "";
         for (let j = 0; j < y; j++) {
             let letter = letters[j][i];
-
-            // Checking if each letter is part of the alphabet
-            if (typeof letter !== 'string') throw new Error("Please enter a matrix of letters only");
-            let alphabet = 'abcdefghijklmnopqrstuvwyz';
-            if (!alphabet.includes(letter.toLowerCase())) throw new Error("Please enter a matrix of letters only");
-
-            // Join letters in the column
             column += letter;
         }
         if (column.includes(word)) return true;
